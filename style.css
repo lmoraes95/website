@@ -43,8 +43,8 @@ p { line-height: 1.75;
 .textlanding { color: black; position: absolute; top: 50%; right: 50%; transform: translate(50%, -50%); max-width: 600px; padding: 2em 3em; }
 ul.list-inline { margin-top: 0px; margin-bottom: 30px; }
 ul.social-buttons { margin-bottom: 0px; }
-ul.social-buttons li a { font-size: 20px; line-height: 40px; display: block; width: 40px; height: 40px; transition: all 0.3s ease 0s; color: white; border-radius: 100%; outline: none; background-color: rgb(33, 37, 41); }
-ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons li a:hover { background-color: #8490ff; }
+ul.social-buttons li a { font-size: 20px; line-height: 40px; display: block; width: 40px; height: 40px; transition: all 0.3s ease 0s; color: white; border-radius: 100%; outline: none; background-color: #4275A2; }
+ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons li a:hover { background-color: #E87A00; }
 
 
 img {
@@ -75,15 +75,28 @@ img {
 }
 
 .btn-primary {
-  background-color: #8490ff !important;
-  border-color: #8490ff !important;
-  color: #8490ff ;
+  background-color: #4275A2!important;
+  border-color: #4275A2!important;
+  color: #4275A2;
   border-width: medium;
 }
 
+.btn-primary2 {
+  background-color: #4275A2!important;
+  border-color: #4275A2!important;
+  color: #4275A2;
+  border-width: medium;
+  padding: 300px;
+}
+
 .btn-primary:hover {
-  background-color: #4a5bf7 !important;
-  border-color: #4a5bf7 !important;
+  background-color: #E87A00!important;
+  border-color: #E87A00 !important;
+}
+
+.btn-primary2:hover {
+  background-color: #E87A00!important;
+  border-color: #E87A00 !important;
 }
 
 .btn-xl {
@@ -92,10 +105,14 @@ img {
   margin: 3px;
 }
 
+
 .btn {
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 500;
 }
+
+
+
 
 .text-uppercase {
   text-transform: uppercase!important;
@@ -260,7 +277,7 @@ html {
 .generic-blockquote {
   padding: 30px 50px 30px 30px;
   background: #fff;
-  border-left: 2px solid #8490ff;
+  border-left: 2px solid #4275A2;
 }
 
 .fa-bar-chart-o:before, .fa-bar-chart:before {
@@ -477,7 +494,7 @@ section { min-height:900px; }
 }
 
 .fa:hover{
-  color:#8490ff;
+  color:#E87A00 !important;
 }
 
 a, a:focus, a:hover {
@@ -485,7 +502,11 @@ a, a:focus, a:hover {
   outline: 0;
 }
 
-
+.generic {
+    color: #4275A2;
+    border: 1px solid #4275A2;
+    background: #4275A2;
+}
 
 
 
