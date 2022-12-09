@@ -8,17 +8,18 @@
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-zrnmn8R8KkWl12rAZFt4yKjxplaDaT7/EUkKm7AovijfrQItFWR7O/JJn4DAa/gx" crossorigin="anonymous">
   <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="icon" type="image/x-icon" href="tabicon2.png">
   </head>
 </head>
 <body>
-    <div id="navbar">
-        <a href="#default" id="logo">Leon M.</a>
+    <div id="navbar" class="nav">
+        <a class ="logonav" id="logo">Leon M.</a>
         <div id="navbar-right">
-          <a href="#home">Home</a>
-          <a href="#about">About Me</a>
-          <a href="#interests">Interests</a>
-          <a href="#portfolio">Portfolio</a>
-          <a href="#contact">Contact</a>
+          <a style="font-size:15px;" href="#home">Home</a>
+          <a style="font-size:15px;"href="#about">About Me</a>
+          <a style="font-size:15px;"href="#interests">Interests</a>
+          <a style="font-size:15px;"href="#portfolio">Portfolio</a>
+          <a style="font-size:15px;"href="#contact">Contact</a>
         </div>
       </div>
     </a>
@@ -165,5 +166,16 @@
 
 
   <script src="logic.js"></script>
+
+  <script>
+    window.addEventListener('scroll',(e)=>{
+      const nav = document.querySelector('.nav');
+      if(window.pageYOffset>0){
+        nav.classList.add("add-shadow");
+      }else{
+        nav.classList.remove("add-shadow");
+      }
+    });
+  </script>
 </body>
 </html>
