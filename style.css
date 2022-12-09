@@ -311,8 +311,12 @@ a {
   background-color: white!important;
 }
 
+.generic-blockquote{
+  background-color: #f8f9fa!important;
+}
+
 .services-area {
-  background-color: #f8f9fa;
+  background-color: white;
 }
 
 .single-services {
