@@ -357,8 +357,20 @@ section {
   height: auto;
 }
 
+html {
+  scroll-behavior: smooth;
+ }
+
 img::selection {
   background: transparent;
+}
+
+#about {
+  min-height: 0px !important;
+}
+
+#home {
+  min-height: 1000px !important;
 }
 
 @media (min-width: 768px) {
@@ -376,7 +388,8 @@ img::selection {
     background-color: #fff;
 }
 
-section { min-height:1000px; }
+section { min-height:900px; }
+
 
 @media (min-width: 768px){
 .text-md-left {
