@@ -1,11 +1,6 @@
 
 
 
-.fa-github:before {
-    content: "\f09b";
-}
-
-
 ::selection {
     background: transparent;
     text-shadow: none;
@@ -268,10 +263,6 @@ html {
 
 .fa-bar-chart-o:before, .fa-bar-chart:before {
   content: "\f080";
-}
-
-.fa-skype:before {
-  content: "\f17e";
 }
 
 .container.fullwidth {
