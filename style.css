@@ -151,7 +151,7 @@ img {
   }
   
   /* Style the active/current link */
-  #navbar-right a:active {
+  #navbar-right a.active {
     background-color: #E87A00;
     color: white;
   }
@@ -305,9 +305,6 @@ a {
   background-color: transparent;
 }
 
-.navbar{
-  background-color: white!important;
-}
 
 .bg-light {
   background-color: #f8f9fa!important;
