@@ -9,9 +9,17 @@
 
 
 
-
 .service.col-md-4:nth-of-type(3n+1) {
   clear: left;
+}
+
+.mb-11{
+  padding-bottom: 80px;
+}
+
+.single-recent-blog:hover .f-img {
+  cursor: pointer;
+  transform: scale(1.05);
 }
 
 
