@@ -411,6 +411,9 @@ section {
   display: block;
 }
 
+#logo{
+  padding-left: 180px;
+}
 .row {
   display: -webkit-box;
   display: -ms-flexbox;
