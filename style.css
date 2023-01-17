@@ -13,6 +13,10 @@
   clear: left;
 }
 
+#logo{
+  padding-left: 220px!important;
+}
+
 .mb-11{
   padding-bottom: 80px;
 }
@@ -230,7 +234,7 @@ img {
   /* Display some links to the right */
   #navbar-right {
     position: absolute;
-    right: 250px;
+    right: 220px;
     text-align: right;
   }
 
