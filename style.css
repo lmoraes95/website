@@ -26,6 +26,10 @@
   transform: scale(1.05);
 }
 
+.certificate:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
 
 body {
     overflow-x: hidden;
@@ -46,7 +50,7 @@ p { line-height: 1.75;
     margin-top: 0;
     margin-bottom: 1rem; }
 
-.textlanding { color: black; position: absolute; top: 50%; right: 50%; transform: translate(50%, -50%); max-width: 600px; padding: 2em 3em; }
+.textlanding { color: black; position: absolute; top: 50%; right: 50%; transform: translate(50%, -50%); max-width: 700px; padding: 2em 3em; }
 ul.list-inline { margin-top: 0px; margin-bottom: 30px; }
 ul.social-buttons { margin-bottom: 0px; }
 ul.social-buttons li a { font-size: 20px; line-height: 40px; display: block; width: 40px; height: 40px; transition: all 0.3s ease 0s; color: white; border-radius: 100%; outline: none; background-color: #4275A2; }
@@ -318,6 +322,13 @@ html {
   margin-right: -15px;
   margin-left: -15px;
 }
+
+.row1 {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 50px;
+  margin-left: 50px;
+}
 .roll-icon-box .icon {
   border: 1px solid blue;
 }
@@ -438,6 +449,10 @@ section {
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
+}
+
+.img-large {
+  width: 100%!important;
 }
 
 .meta {
