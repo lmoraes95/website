@@ -774,6 +774,21 @@ a, a:focus, a:hover {
   word-wrap: break-word;
 }
 
+@media screen and (max-width: 600px) {
+  #navbar {
+      flex-direction: column;
+  }
+  .single-recent-blog, .single-services {
+      width: 100%;
+  }
+  .textlanding {
+      text-align: center;
+  }
+  .f-img {
+      width: 100%;
+  }
+}
+
 
 
 
