@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Leon Moraes, Data Professional - Page 2</title>
+  <meta name="description" content="Additional projects and information">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.11.2/css/all.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="icon" type="image/x-icon" href="tabicon2.png">
+</head>
+<body>
+  <div id="navbar" class="nav">
+    <a id="logo" href="#home">Spotify Project</a>
+    <div id="navbar-right">
+      <a style="font-size:16px;" href="index.html">Home</a>
+      <a style="font-size:16px;" href="https://github.com/lmoraes95">Github</a>
+    </div>
+  </div>
+
+  <section id="content" class="content-center">
+    <div class="container">
+      <h1 class="title-spacing">Webscraping and Spotify Automation</h1>
+      <p class="paragraph-spacing">I really enjoy finding new artists and seeing them live and so the goal of this project was to augment my band searching capabilities as I travel around. I know that bandsintown(BIT) is now integrated with spotify. However, BIT has artists not on spotify, and spotify's functions are still limited to manual inputs. This syntax will create an entire playlist with all the bands in the area you searched and allow you to listen to their top song so you can decide whether or not you want to hear more of them or see them in person. I might turn this into an application some time in the future. Buuuuut, I'm not a software/app developer and have no intention of becoming one, so it's going to be a 'soon TM'. Also, considering Spotify's limitations, I will be updating the syntax at a later time to include other music streaming platforms. The entire project uses python and the ipy notebook so that I could easily create sections(sue me).</p>
+    </div>
+</section>
+
+<section id="code-section">
+    <div class="container">
+      <h2>All Imports</h2>
+      <pre><code>from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from datetime import datetime, timedelta
+import pandas as pd
+import time
+import requests
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from base64 import b64encode
+import discogs_client
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
+import csv</code></pre>
+    </div>
+</section>
+
+<section id="code-explanation">
+    <div class="container">
+        <h2>Code Explanation</h2>
+        <p>
+            Here we are importing all the necessary libraries and modules for our project:
+            <ul>
+                <li><code>selenium</code>: For automating web browser interaction.</li>
+                <li><code>pandas</code>: For data manipulation and analysis.</li>
+                <li><code>datetime</code>: For handling date and time operations.</li>
+                <li><code>requests</code>: For making HTTP requests.</li>
+                <li><code>spotipy</code>: For interacting with the Spotify API.</li>
+                <li>...and others for various minor functionalities within the project.</li>
+            </ul>
+            As you are hopefully aware, these imports form the backbone of our webscraping and automation task, allowing us to interact with BIT, Spotify, Discogs, and Nominatim.
+        </p>
+    </div>
+</section>
+
+<section id="code-section-2">
+    <div class="container">
+      <h2>Scraper Class Code</h2>
+      <pre><code>class Scraper:
+    def __init__(self):
+        options = Options()
+        options.add_argument("--headless")
+        service = Service(executable_path=r"C:\webdrivers\chromedriver.exe")
+        self.driver = webdriver.Chrome(service=service, options=options)
+        self.driver.set_page_load_timeout(120)
+
+    def tearDown(self):
+        self.driver.quit()
+
+    def get_coordinates(self, city_name):
+        base_url = 'https://nominatim.openstreetmap.org/search'
+        params = {
+            'q': city_name,
+            'format': 'json'
+        }
+        headers = {
+            'User-Agent': 'MyApp/1.0'
+        }
+        response = requests.get(base_url, params=params, headers=headers)
+        if response.status_code != 200:
+            return None, None
+        data = response.json()
+        if data:
+            latitude = data[0]['lat']
+            longitude = data[0]['lon']
+            return latitude, longitude
+        else:
+            return None, None
+        time.sleep(1)
+
+    def scrape_website(self, start_date, end_date):
+        latitude, longitude = self.get_coordinates('San Francisco')
+        df = pd.DataFrame(columns=["Band Name", "Date"])
+        while start_date <= end_date:
+            formatted_start_date = start_date.strftime('%Y-%m-%dT%H:%M:%S')
+            formatted_end_date = (start_date + timedelta(days=2)).strftime('%Y-%m-%dT%H:%M:%S')
+            url = f"https://www.bandsintown.com/choose-dates/genre/all-genres?latitude={latitude}&longitude={longitude}&calendarTrigger=false&date={formatted_start_date}%2C{formatted_end_date}"
+            self.driver.get(url)
+            wait = WebDriverWait(self.driver, 10)
+            wait.until(EC.visibility_of_any_elements_located((By.CLASS_NAME, '_5CQoAbgUFZI3p33kRVk')))
+
+            try:
+                view_all_button = self.driver.find_element(By.CLASS_NAME, "uM7snV9wLa0DzLoMy9Q1")
+                view_all_button.click()
+
+            except Exception as e:
+                print(f"Error clicking 'View All' button: {e}")
+
+            for _ in range(10):
+                self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                time.sleep(5)
+                bands = self.driver.find_elements(By.CLASS_NAME, "_5CQoAbgUFZI3p33kRVk")
+                dates = self.driver.find_elements(By.CLASS_NAME, "r593Wuo4miYix9siDdTP")
+
+                for band, date in zip(bands, dates):
+                    band_name = band.text.encode('raw_unicode_escape').decode('utf-8', 'ignore')
+                    concert_date = date.text
+                    if '-' in band_name:
+                        band_name = band_name.split('-')[0].strip()
+                    if not df[df['Band Name'] == band_name].empty:
+                        df.loc[df['Band Name'] == band_name, 'Date'].apply(lambda x: x.append(concert_date) if concert_date not in x else x)
+                    else:
+                        df.loc[len(df.index)] = {"Band Name": band_name, "Date": [concert_date]}
+            start_date += timedelta(days=3)
+        df.to_csv('bands_and_dates.csv', index=False)
+
+scraper = Scraper()
+try:
+    scraper.scrape_website(datetime(2024, 5, 1), datetime(2024, 5, 2))
+finally:
+    scraper.tearDown()
+      </code></pre>
+    </div>
+</section>
+
+<section id="code-explanation-2">
+    <div class="container">
+        <h2>Inside the Scraper Class</h2>
+        <p>
+            Let's unpack the <code>Scraper</code> class, our automated web scraping maestro. It's pretty straightforward but incredibly powerful.
+            <ul>
+                <li>Starting with the constructor (<code>__init__</code>), we kick off a headless Chrome browser. "Headless" means it runs in the background, but hey, feel free to watch the browser in action by not going headless. It's pretty cool to see how it mimics human actions on the web.</li>
+                <li>Next up, the <code>get_coordinates</code> method is like our GPS. It uses the Nominatim API to find exactly where in the world our city is. This precision is key for making sure we're scraping the right concerts from Bandsintown.</li>
+                <li>Then we dive into the heart of the operation with <code>scrape_website</code>. This method is where the magic happens, pulling concert info from Bandsintown based on our location. It meticulously goes through the site, collecting event details and saving them for us to analyze later.</li>
+            </ul>
+            By wrapping all this functionality in the <code>Scraper</code> class, we've got a sleek, easy-to-use tool that makes web scraping a breeze. It’s like having your own backstage pass to the web’s data concert!
+        </p>
+    </div>
+</section>
+
+
+
+<section id="code-section-3">
+    <div class="container">
+        <h2>Spotify Authentication Code</h2>
+        <pre><code>client_id = 'your own spotify developer client id'
+client_secret = 'your own spotify developer client secret'
+
+credentials = b64encode(f'{client_id}:{client_secret}'.encode('utf-8')).decode('utf-8')
+
+headers = {
+    'Authorization': f'Basic {credentials}',
+    'Content-Type': 'application/x-www-form-urlencoded'
+}
+
+data = {
+    'grant_type': 'client_credentials'
+}
+
+response = requests.post('https://accounts.spotify.com/api/token', headers=headers, data=data)
+
+access_token = response.json()['access_token']</code></pre>
+    </div>
+</section>
+
+<section id="code-explanation-3">
+    <div class="container">
+        <h2>Spotify Authentication Explained</h2>
+        <p>
+            This section is all about getting us the keys to the kingdom, so to speak, so we can play with Spotify's awesome Web API.
+            <ul>
+                <li>The <code>client_id</code> and <code>client_secret</code> are like your personal access passes. You get these from the Spotify Developer Dashboard, and they prove that your application is legit.</li>
+                <li>We then take these passes and mix them into a single <code>credentials</code> string, encoded in base64.</li>
+                <li>The <code>data</code> is where we specify our request type, here being <code>client_credentials</code>, which is tech-speak for saying, "Hey Spotify, just give me access without involving a user right now."</li>
+                <li>Using <code>requests.post</code>, we knock on Spotify’s door with our credentials and request, and if all goes well, they hand us an <code>access_token</code>.</li>
+                <li>This <code>access_token</code> is like our all-access badge, letting us fetch data and perform actions via the API.</li>
+            </ul>
+            So, this whole process is our way of getting through the backstage door of Spotify’s API, allowing us to pull data and make things happen in the app.
+        </p>
+    </div>
+</section>
+
+
+<section id="code-section-4">
+    <div class="container">
+        <h2>Fetching Spotify IDs and Updating CSV</h2>
+        <pre><code>def get_spotify_id(artist_name, access_token):
+    base_url = 'https://api.spotify.com/v1/search'
+    headers = {'Authorization': f'Bearer {access_token}'}
+    query_params = {
+        'q': artist_name,
+        'type': 'artist',
+        'limit': 50
+    }
+    response = requests.get(base_url, headers=headers, params=query_params)
+    data = response.json()
+    if 'artists' in data and 'items' in data['artists'] and data['artists']['items']:
+        returned_artist_name = data['artists']['items'][0]['name']
+        if returned_artist_name.lower() == artist_name.lower():
+            spotify_id = data['artists']['items'][0]['id']
+            return spotify_id
+    return None
+
+csv_file_path = 'bands_and_dates.csv'
+new_csv_file_path = 'band_names_with_spotify_ids.csv'
+fieldnames = ['Band Name', 'Date', 'Spotify ID']
+
+with open(csv_file_path, 'r', newline='') as file, open(new_csv_file_path, 'w', newline='') as new_file:
+    reader = csv.DictReader(file)
+    writer = csv.DictWriter(new_file, fieldnames=fieldnames)
+    writer.writeheader()
+    for row in reader:
+        band_name = row['Band Name']
+        spotify_id = get_spotify_id(band_name, access_token)
+        if spotify_id:
+            row['Spotify ID'] = spotify_id
+        writer.writerow(row)
+
+print(f"Spotify IDs appended to {new_csv_file_path}.")</code></pre>
+    </div>
+</section>
+
+<section id="code-explanation-4">
+    <div class="container">
+        <h2>What's Happening with Spotify IDs and Our CSV?</h2>
+        <p>
+            Ever wondered how we can magically update our music dataset with Spotify IDs?
+            <ul>
+                <li>Starting with the <code>get_spotify_id</code> function, we ask Spotify's API to give us the ID for an artist. We just need to know their name, and voilà, we get the ID in return(If the artist doesn't have a unique name, it's possible that we will fetch a different id than the one we want).</li>
+                <li>Then, we take our trusty CSV file, which is already filled with band names and concert dates. We go through it row by row, like checking off a guest list, to match each band with their Spotify ID.</li>
+                <li>Whenever we hit the jackpot and find an ID, we pop it right into the CSV, alongside the band's name.</li>
+                <li>Once we’ve gone through all the names, we save the data into a new CSV file. Now it's not just about names and dates; it's got the Spotify IDs too.</li>
+            </ul>
+            This whole setup streamlines adding Spotify IDs to our list, making it super handy to spot artists who might be playing incognito without a Spotify presence. This allows you to take a deep dive into other platforms to find those elusive tracks!
+        </p>
+    </div>
+</section>
+
+
+<section id="code-section-5">
+    <div class="container">
+        <h2>Discogs Data Fetching and Filtering</h2>
+        <pre><code>d = discogs_client.Client('ExampleApplication/0.1', user_token='your discogs user token')
+
+df_bands = pd.read_csv('band_names_with_spotify_ids.csv')
+
+bands = df_bands["Band Name"].tolist()
+dates = df_bands["Date"].tolist()
+spotifyid = df_bands["Spotify ID"].tolist()
+
+data = []
+
+for band, date, sid in zip(bands, dates, spotifyid):
+    try:
+        print(f"Searching for {band}")
+        results = d.search(band, type='artist')
+        if not results:
+            print(f"No results found for {band}")
+            continue
+        artist = results[0]
+        if not artist.releases:
+            print(f"No releases found for {band}")
+            continue
+        main_release = artist.releases[0]
+        genres = ', '.join(main_release.genres) if main_release.genres else 'N/A'
+        styles = ', '.join(main_release.styles) if main_release.styles else 'N/A'
+        data.append({'Band': band, 'Date': date, 'Spotify ID': sid, 'Main Release': main_release.title, 'Genres': genres, 'Styles': styles})
+        time.sleep(6)
+    except Exception as e:
+        print(f"Error occurred for {band}: {e}")
+
+df = pd.DataFrame(data)
+df.to_csv('bands_with_genres_and_styles.csv', index=False)
+filtered_df = df[df['Styles'].str.contains('Indie') & df['Styles'].str.contains('Pop')]
+filtered_df.to_csv('indie_and_pop_bands.csv', index=False)
+
+print(filtered_df)</code></pre>
+    </div>
+</section>
+
+<section id="code-explanation-5">
+    <div class="container">
+        <h2>Why Are We Digging into Discogs?</h2>
+        <p>
+            Alright, let’s talk about why we’re tapping into the Discogs API. We’re basically giving our band dataset a makeover, adding some cool genre and style info. So, if you’re not in the mood for country tunes (no hate), you can easily filter those out.
+            <ul>
+                <li>First off, we kick things off with the Discogs client. You’ll need your own user token here because, hey, nobody wants to share their secrets (and I’m not getting doxxed today).</li>
+                <li>We then pull up our CSV file.</li>
+                <li>Going through each band, we hit up Discogs to find out what their vibe is – are they rock, jazz, electro? We get their main release and the genres and styles they’re known for.</li>
+                <li>Here we can get selective and sift through the DataFrame to spotlight bands that fit our chosen genres and styles, saving those gems in another CSV.</li>
+            </ul>
+        </p>
+    </div>
+</section>
+
+
+<section id="code-section-6">
+    <div class="container">
+        <h2>Spotify Playlist Creation and Track Addition</h2>
+        <pre><code>
+client_id = 'your spotify developer client id'
+client_secret = 'your spotify developer client secret'
+redirect_uri = 'http://localhost:8888/callback'
+scope = 'playlist-modify-public'
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri, scope=scope))
+
+current_user = sp.current_user()
+user_id = current_user['id']
+
+excel_file = 'band_names_with_spotify_ids.csv'
+df = pd.read_csv(excel_file)
+band_names = df.iloc[:, 0].tolist()
+band_ids = df.iloc[:, 2].tolist()
+
+track_uris = []
+for band_id in band_ids:
+    if pd.isnull(band_id) or band_id == "":
+        print("Skipping band_id as it's NaN or empty")
+        continue
+
+    try:
+        artist_tracks = sp.artist_top_tracks(band_id)
+        if artist_tracks['tracks']:
+            top_track = artist_tracks['tracks'][0]
+            track_uris.append(top_track['uri'])
+    except Exception as e:
+        print(f"Error processing band_id {band_id}: {e}")
+
+playlist_name = 'your new playlist name'
+new_playlist = sp.user_playlist_create(user=user_id, name=playlist_name, public=True)
+playlist_id = new_playlist['id']
+
+failed_tracks = []
+for uri in track_uris:
+    if uri is not None:
+        try:
+            sp.playlist_add_items(playlist_id, [uri])
+        except Exception as e:
+            print(f"Error adding track to playlist: {e}")
+            failed_tracks.append(uri)
+
+if failed_tracks:
+    print("Failed to add the following tracks to the playlist:")
+    for uri in failed_tracks:
+        print(f"Track URI: {uri}")
+        </code></pre>
+    </div>
+</section>
+
+<section id="code-explanation-6">
+    <div class="container">
+        <h2>Creating Your Own Spotify Playlist: A How-To Guide</h2>
+        <p>
+            This script is responsible for automating the Spotify playlist creation and track addition with the Spotify API.
+            <ul>
+                <li>Yes, we’re doing the Spotify dance again with the SpotifyOAuth class for authentication. A bit of déjà vu, I know, but we’re tuning up some things, so bear with me as we perfect the mix.</li>
+                <li>We snag the current user's ID to roll out the red carpet for a brand-new playlist in their account.</li>
+                <li>You're also going to need to name your new playlist</li>
+                <li>Not all goes to plan, though – some tracks might miss the cut due to errors (probably those indie bands too cool for Spotify), but we keep track of those in a backstage log.</li>
+            </ul>
+            Overall, This script is more than just code; it’s your ticket to curating epic playlists with ease, discovering new tunes, and maybe even finding that one band no one else knows about yet. If you have any suggestions, feel free to email me or add me on linkedin. I am more than happy to talk about the script and anything you might have questions about.
+        </p>
+    </div>
+</section>
+
+  <div class="footer-basic bg-light">
+    <footer>
+      <div class="social">
+        <a class="diff-color" href="https://twitter.com/analystleon"><i class="fab fa-twitter"></i></a>
+        <a class="diff-color" href="https://github.com/lmoraes95"><i class="fab fa-github"></i></a>
+        <a class="diff-color" href="https://linkedin.com/in/leon-moraes-1429441aa/"><i class="fab fa-linkedin"></i></a>
+      </div>
+      <ul class="list-inline">
+        <li class="list-inline-item"><a href="index.html">Home</a></li>
+      </ul>
+      <p class="copyright">Leon Moraes 2024</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+  <script src="logic.js"></script>
+</body>
+</html>

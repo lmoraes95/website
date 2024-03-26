@@ -280,7 +280,7 @@ html {
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
-  user-select: none;
+  user-select: text;
   border-top-style: solid ;
   border-right-style: solid;
   border-bottom-style: solid;
@@ -622,6 +622,157 @@ a, a:focus, a:hover {
 }
 
 
+.content-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 80vh; /* This makes the section take the full height of the viewport */
+  padding-top: 0px;
+  margin-bottom: -500px;
+}
+
+.content-center .container {
+  max-width: 1000px; /* Adjust as needed */
+}
+
+
+.title-spacing {
+  margin-bottom: 30px; /* Increase or decrease this value as needed */
+}
+
+.paragraph-spacing {
+  margin-top: 50px; /* Optional, adjust if you need space above the paragraph */
+}
+
+#code-section {
+  margin-top: 20px; /* Reduce top margin to bring sections closer */
+  /* Other styles */
+  margin-bottom: -480px;
+}
+
+#code-section-2{
+  margin-top: 20px; /* Reduce top margin to bring sections closer */
+  /* Other styles */
+  margin-bottom: -300px;
+}
+
+#code-section-3{
+  margin-top: 20px; /* Reduce top margin to bring sections closer */
+  /* Other styles */
+  margin-bottom: -450px;
+}
+
+#code-section-4{
+  margin-top: 20px; /* Reduce top margin to bring sections closer */
+  /* Other styles */
+  margin-bottom: -300px;
+}
+
+#code-section-5{
+  margin-top: 20px; /* Reduce top margin to bring sections closer */
+  /* Other styles */
+  margin-bottom: -300px;
+}
+
+#code-section-6{
+  margin-top: 20px; /* Reduce top margin to bring sections closer */
+  /* Other styles */
+  margin-bottom: -300px;
+}
+
+
+#code-explanation{
+  margin-top: 20px; /* Reduce top margin to bring sections closer */
+  /* Other styles */
+  margin-bottom: -550px;
+}
+
+#code-explanation-2{
+  margin-top: 20px; /* Reduce top margin to bring sections closer */
+  /* Other styles */
+  margin-bottom: -550px;
+}
+
+#code-explanation-3{
+  margin-top: 20px; /* Reduce top margin to bring sections closer */
+  /* Other styles */
+  margin-bottom: -550px;
+}
+
+#code-explanation-4{
+  margin-top: 20px; /* Reduce top margin to bring sections closer */
+  /* Other styles */
+  margin-bottom: -550px;
+}
+
+#code-explanation-5{
+  margin-top: 20px; /* Reduce top margin to bring sections closer */
+  /* Other styles */
+  margin-bottom: -600px;
+}
+
+
+
+#code-section pre {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  padding: 10px;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+#code-section-2 pre {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  padding: 10px;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+#code-section-3 pre {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  padding: 10px;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+#code-section-4 pre {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  padding: 10px;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+#code-section-5 pre {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  padding: 10px;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+#code-section-6 pre {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  padding: 10px;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
 
 
 
