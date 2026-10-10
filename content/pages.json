@@ -1,0 +1,72 @@
+[
+  {
+    "slug": "about",
+    "title": "About Me",
+    "description": "The person behind the spreadsheets. A little work, a lot of curiosity, and an unreasonable number of hobbies.",
+    "eyebrow": "01 / THE HUMAN BIT",
+    "section": "about",
+    "kind": "page",
+    "return_url": "index.html#about",
+    "return_label": "Back to the short version"
+  },
+  {
+    "slug": "portfolio",
+    "title": "Portfolio",
+    "description": "A place for work worth sharing. The shelf is here; the projects are still getting their act together.",
+    "eyebrow": "02 / THINGS I MAKE",
+    "section": "portfolio",
+    "kind": "page",
+    "return_url": "studies.html",
+    "return_label": "Read some study notes"
+  },
+  {
+    "slug": "studies",
+    "title": "Studies",
+    "description": "Notes from the rabbit holes: data, community impact, and the questions that turn a quick look into an entire afternoon.",
+    "eyebrow": "03 / STILL ASKING WHY",
+    "section": "studies",
+    "kind": "collection",
+    "return_url": "index.html#studies",
+    "return_label": "Back to the short version"
+  },
+  {
+    "slug": "contact",
+    "title": "Contact",
+    "description": "Have a question, a strange idea, or a book I should have read already? Let’s compare notes.",
+    "eyebrow": "04 / YOUR TURN",
+    "section": "contact",
+    "kind": "page",
+    "return_url": "about.html",
+    "return_label": "Meet the person first"
+  },
+  {
+    "slug": "studies-better-questions",
+    "title": "Before the model, a better question",
+    "description": "A few things to ask before opening a notebook and enthusiastically importing everything.",
+    "eyebrow": "STUDY NOTE / DATA & MACHINE LEARNING",
+    "section": "studies",
+    "kind": "note",
+    "return_url": "studies.html",
+    "return_label": "All study notes"
+  },
+  {
+    "slug": "studies-community-impact",
+    "title": "Averages don’t tell the whole story",
+    "description": "Program evaluation starts with a deceptively simple question: better for whom?",
+    "eyebrow": "STUDY NOTE / PROGRAM EVALUATION",
+    "section": "studies",
+    "kind": "note",
+    "return_url": "studies.html",
+    "return_label": "All study notes"
+  },
+  {
+    "slug": "studies-show-your-work",
+    "title": "A little kindness for future you",
+    "description": "Reproducible analysis is a kindness to other people, including the version of you who has forgotten all of this.",
+    "eyebrow": "STUDY NOTE / STATISTICS & ANALYSIS",
+    "section": "studies",
+    "kind": "note",
+    "return_url": "studies.html",
+    "return_label": "All study notes"
+  }
+]

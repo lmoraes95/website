@@ -165,12 +165,11 @@
       position:relative
     }
     .doodle {
-      width:150px;
-      height:130px;
-      color:var(--orange);
-      margin-left:20px;
-      transform:rotate(-8deg)
-    }
+      width: 230px;
+      height: 200px;
+      object-fit: contain;
+      display: block;
+      margin-left: 20px;}
     .handwritten {
       font-family:'Segoe Print','Bradley Hand',cursive;
       font-size:20px;
@@ -676,11 +675,16 @@
           <p class="hero-subtitle">Serious about data.<br><em>Less serious about myself.</em></p>
         </div>
         <div class="hero-aside">
-          <svg class="doodle" viewBox="0 0 240 210" fill="none" aria-hidden="true">
-            <path d="M42 157C15 102 54 43 115 42c58-3 100 38 91 94-8 53-82 75-127 44" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <path d="M83 85l-5 20m72-22-4 21M80 135c24 29 58 24 75-5M109 15l-5-12m52 23 9-15M33 41 22 32M219 64l14-7M202 176l14 9" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-            <path d="m26 166 18-7-3 18" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <video
+          class="doodle"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+          aria-hidden="true">
+          <source src="assets/animation.mp4" type="video/mp4">
+          </video>
           <p class="handwritten">a work in progress.<br>the human, too.</p>
           <p>Hi, I’m Leon. He/him. I work where data meets people: healthcare, program evaluation, and research. Usually asking one more question than strictly necessary.</p>
           <a class="text-link" href="#about">Meet the person behind the spreadsheets <span aria-hidden="true"><span class="arrow" aria-hidden="true">↘</span></span></a>

@@ -1,0 +1,20 @@
+<p>There is a particular kind of mystery novel where the detective is you, the scene is a folder of files, and the clue is called <code>final_final_v3.csv</code>. Reproducible analysis is one way to make that story considerably shorter.</p>
+
+<h2>Leave a trail from input to answer.</h2>
+<p>Someone should be able to understand where the data came from, what changed along the way, and how the result was produced. That someone may be a colleague. It may also be you, three months later, with absolutely no memory of why row 417 was special.</p>
+<p>Keep the original inputs separate from cleaned data and outputs. Record the source, relevant dates, and any access restrictions. Put repeated cleaning steps in a script when possible, so they can be reviewed and rerun instead of remembered.</p>
+
+<h2>Explain the choices, too.</h2>
+<p>Code can show that missing values were removed. It does not necessarily explain why removing them was reasonable, how many records were affected, or whether those records differ from the rest.</p>
+<ul>
+  <li>Define important variables and the population being described.</li>
+  <li>Record exclusions and the reasoning behind them.</li>
+  <li>State assumptions and checks that could challenge them.</li>
+  <li>Capture software versions and any random seeds needed to rerun the work.</li>
+</ul>
+<p>A short README can carry much of this context. It does not need to become a novel. The detective already has enough reading to do.</p>
+
+<h2>Rerun it before calling it done.</h2>
+<p>Try the documented steps from the beginning, without relying on a forgotten object in memory or an unexplained file on the desktop. Check that the outputs make sense, not just that the script finishes.</p>
+<p>Reproducibility makes an analysis easier to inspect; it does not automatically make the assumptions correct. And when data is sensitive, showing the work means documenting the process while respecting access limits, rather than publishing the underlying records.</p>
+<aside class="article-aside"><p>A small act of kindness for future you: write down the reason while you still remember it.</p></aside>
