@@ -1,19 +1,5 @@
 # Leon Moraes — website
 
-A lightweight static site. The homepage keeps its section navigation; section links open longer pages, and Studies is a collection of individual notes. Portfolio intentionally has no projects yet.
-
-## Run locally
-
-From this directory:
-
-```sh
-python3 -m http.server 8000 --bind 127.0.0.1
-```
-
-Serve the whole directory to follow links between pages. Each generated HTML page also includes its own styles and script, so it can be opened or downloaded individually without losing its design. Links to other pages need the other HTML files alongside it.
-
-No package install, framework, external fonts, or CDN assets are required by the redesigned pages. `spotify.html`, `style.css`, `logic.js`, and the original images are legacy files; the new site does not link to that project.
-
 ## Edit the site
 
 - `index.html`: homepage content, styles, and scroll navigation. This remains a self-contained page and supplies the shared visual styles to the page builder.
@@ -49,5 +35,3 @@ The root `about.html`, `portfolio.html`, `studies.html`, `contact.html`, and `st
 - `studies-community-impact.html` — evaluating community impact beyond averages.
 - `studies-show-your-work.html` — reproducible analysis.
 - `contact.html` — email and existing social links.
-
-The existing Azure Static Web Apps workflow serves the repository root. Deployment is separate from local editing and validation.
