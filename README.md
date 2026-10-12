@@ -1,37 +1,39 @@
 # Leon Moraes — website
 
+A static personal site with Home, About Me, Portfolio, Blog, and Contact. The homepage navigation scrolls between sections; section links open the longer pages.
+
+No package installation or build step is required. Serve the entire directory so links and `assets/animation.mp4` work. The animation links to `https://www.instagram.com/un.familiar_ground/`.
+
 ## Edit the site
 
-- `index.html`: homepage content, styles, and scroll navigation. This remains a self-contained page and supplies the shared visual styles to the page builder.
-- `content/*.html`: longer page content and study notes, as HTML fragments.
-- `content/pages.json`: page titles, descriptions, navigation sections, and return links.
-- `templates/page.html`: shared secondary-page layout.
-- `templates/page.css`: styles specific to the longer pages.
-- `scripts/build_pages.py`: standard-library Python builder. It embeds styles into each output, adds heading anchors and a contents list, and calculates reading time for notes.
+The root HTML files are the pages served to visitors. Each has inline styles and JavaScript. Edit those files directly and keep any matching `content/*.html` fragments and `content/pages.json` metadata in sync.
 
-After changing the shared homepage styles, content, metadata, or templates, regenerate the secondary pages:
+- `index.html`: homepage layout, text, animation link, and latest-post preview.
+- `blog.html`: blog listing. Add or edit entries in the `post-list` element.
+- `voter-id.html`: the first blog post, including the supplied source links.
+- `about.html`, `portfolio.html`, `contact.html`: longer section pages.
+- `content/*.html`: matching body fragments, useful when editing or reusing content.
+- `content/pages.json`: page titles, descriptions, sections, and return links.
+- `templates/page.html` and `templates/page.css`: reference layout and styles for additional pages.
 
-```sh
-python3 scripts/build_pages.py
-python3 scripts/build_pages.py --check
-```
+There is no page generator included in this checkout. Editing a fragment or template alone does not update the served pages.
 
-The root `about.html`, `portfolio.html`, `studies.html`, `contact.html`, and `studies-*.html` files are generated. Edit their source fragments and rebuild, rather than editing generated output. Commit the generated files with their sources so static hosting can serve the site without running a build.
+## Add a blog post
 
-## Add a study note
+1. Copy `voter-id.html` to a new root HTML file with a descriptive name.
+2. Update its document title, description, breadcrumb, heading, subtitle, reading time, contents links, and article body. Give each section heading a unique ID.
+3. Keep the return link pointing to `blog.html` and the Blog navigation item active.
+4. Add the body fragment to `content/` and an entry to `content/pages.json` with `kind: "post"` and `section: "blog"`.
+5. Add a linked summary in `blog.html` and `content/blog.html`; update the latest-post preview in `index.html` if appropriate.
+6. Open the site through the local server and check navigation, citations, and mobile layout.
 
-1. Create `content/studies-your-topic.html` with the body of your note. Use `h2` for sections; the template supplies the page's `h1`.
-2. Add its metadata in `content/pages.json`, following an existing note. Set `kind` to `note`, `section` to `studies`, and `return_url` to `studies.html`.
-3. Add a linked entry to `content/studies.html` using the existing `post-row` structure.
-4. Run `python3 scripts/build_pages.py` and `python3 scripts/build_pages.py --check`.
+## Routes
 
-## Page map
+- `index.html#blog`: the homepage blog section.
+- `blog.html`: all blog posts.
+- `voter-id.html`: “Voter ID Sounds Reasonable. So What Does It Actually Solve?”
+- `studies.html`: compatibility redirect to `blog.html`. The old `index.html#studies` anchor also remains available for bookmarks.
 
-- `index.html` — short introduction with Home / About Me / Portfolio / Studies / Contact anchors.
-- `about.html` — longer introduction and interests.
-- `portfolio.html` — empty project shelf.
-- `studies.html` — study-note index and existing credentials.
-- `studies-better-questions.html` — asking useful questions before modeling.
-- `studies-community-impact.html` — evaluating community impact beyond averages.
-- `studies-show-your-work.html` — reproducible analysis.
-- `contact.html` — email and existing social links.
+The three original study-note pages and their content fragments have been removed. Existing credential links are on the About Me page.
+
+Cloudflare Web Analytics remains in the live pages. Exclude its requests during automated local checks to avoid sending synthetic visits. Local edits do not publish or deploy the site.

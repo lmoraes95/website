@@ -16,17 +16,17 @@
     "eyebrow": "02 / THINGS I MAKE",
     "section": "portfolio",
     "kind": "page",
-    "return_url": "studies.html",
-    "return_label": "Read some study notes"
+    "return_url": "blog.html",
+    "return_label": "Read the blog"
   },
   {
-    "slug": "studies",
-    "title": "Studies",
-    "description": "Notes from the rabbit holes: data, community impact, and the questions that turn a quick look into an entire afternoon.",
-    "eyebrow": "03 / STILL ASKING WHY",
-    "section": "studies",
+    "slug": "blog",
+    "title": "Blog",
+    "description": "Longer thoughts, useful questions, and a closer look at the evidence.",
+    "eyebrow": "03 / THE BLOG",
+    "section": "blog",
     "kind": "collection",
-    "return_url": "index.html#studies",
+    "return_url": "index.html#blog",
     "return_label": "Back to the short version"
   },
   {
@@ -40,33 +40,13 @@
     "return_label": "Meet the person first"
   },
   {
-    "slug": "studies-better-questions",
-    "title": "Before the model, a better question",
-    "description": "A few things to ask before opening a notebook and enthusiastically importing everything.",
-    "eyebrow": "STUDY NOTE / DATA & MACHINE LEARNING",
-    "section": "studies",
-    "kind": "note",
-    "return_url": "studies.html",
-    "return_label": "All study notes"
-  },
-  {
-    "slug": "studies-community-impact",
-    "title": "Averages don’t tell the whole story",
-    "description": "Program evaluation starts with a deceptively simple question: better for whom?",
-    "eyebrow": "STUDY NOTE / PROGRAM EVALUATION",
-    "section": "studies",
-    "kind": "note",
-    "return_url": "studies.html",
-    "return_label": "All study notes"
-  },
-  {
-    "slug": "studies-show-your-work",
-    "title": "A little kindness for future you",
-    "description": "Reproducible analysis is a kindness to other people, including the version of you who has forgotten all of this.",
-    "eyebrow": "STUDY NOTE / STATISTICS & ANALYSIS",
-    "section": "studies",
-    "kind": "note",
-    "return_url": "studies.html",
-    "return_label": "All study notes"
+    "slug": "voter-id",
+    "title": "Voter ID Sounds Reasonable. So What Does It Actually Solve?",
+    "description": "On election integrity, the difference between a popular idea and an effective policy.",
+    "eyebrow": "BLOG / ELECTIONS & POLICY",
+    "section": "blog",
+    "kind": "post",
+    "return_url": "blog.html",
+    "return_label": "All blog posts"
   }
 ]
